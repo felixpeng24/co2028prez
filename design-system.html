@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Class of 2028 Email Design System</title>
+  <style>
+    :root {
+      --purple: #7F7CAF;
+      --light-blue: #9fb4c7;
+      --navy: #28587b;
+      --sage: #9fb798;
+      --steel: #4f7fa9;
+      --bg: #fafafa;
+      --text: #2c2c2c;
+      --light-gray: #f0f0f0;
+      --border: #e0e0e0;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* ===== DESIGN SYSTEM REFERENCE ===== */
+
+    .ds-header {
+      background: linear-gradient(135deg, var(--navy), var(--purple));
+      color: white;
+      padding: 60px 40px;
+      text-align: center;
+    }
+
+    .ds-header h1 {
+      font-size: 2.8rem;
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 8px;
+    }
+
+    .ds-header p {
+      font-size: 1.15rem;
+      opacity: 0.85;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .ds-nav {
+      background: white;
+      border-bottom: 1px solid var(--border);
+      padding: 14px 40px;
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .ds-nav a {
+      color: var(--navy);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding: 4px 0;
+      border-bottom: 2px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .ds-nav a:hover { border-bottom-color: var(--purple); }
+
+    .ds-section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 48px 40px;
+    }
+
+    .ds-section + .ds-section {
+      border-top: 1px solid var(--border);
+    }
+
+    .ds-section h2 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+
+    .ds-section > p {
+      color: #666;
+      margin-bottom: 28px;
+    }
+
+    /* Color palette */
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 16px;
+    }
+
+    .color-card {
+      border-radius: 10px;
+      overflow: hidden;
+      background: white;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+
+    .color-card .swatch {
+      height: 80px;
+    }
+
+    .color-card .info {
+      padding: 10px 12px;
+    }
+
+    .color-card .info strong {
+      display: block;
+      font-size: 0.85rem;
+    }
+
+    .color-card .info code {
+      font-size: 0.78rem;
+      color: #888;
+    }
+
+    /* Typography */
+    .type-example {
+      background: white;
+      border-radius: 10px;
+      padding: 24px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+
+    .type-example .label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--purple);
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    /* Component cards */
+    .component-card {
+      background: white;
+      border-radius: 10px;
+      padding: 28px;
+      margin-bottom: 20px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+
+    .component-card h3 {
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--purple);
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .component-preview {
+      background: var(--light-gray);
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 14px;
+      border: 1px dashed var(--border);
+    }
+
+    .component-note {
+      font-size: 0.85rem;
+      color: #888;
+      font-style: italic;
+    }
+
+    /* Tone section */
+    .tone-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .tone-do, .tone-dont {
+      background: white;
+      border-radius: 10px;
+      padding: 24px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+
+    .tone-do { border-left: 4px solid var(--sage); }
+    .tone-dont { border-left: 4px solid #d9534f; }
+
+    .tone-do h3 { color: var(--sage); }
+    .tone-dont h3 { color: #d9534f; }
+
+    .tone-do ul, .tone-dont ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .tone-do li::before { content: "✓ "; color: var(--sage); font-weight: bold; }
+    .tone-dont li::before { content: "✗ "; color: #d9534f; font-weight: bold; }
+
+    .tone-do li, .tone-dont li {
+      padding: 4px 0;
+      font-size: 0.95rem;
+    }
+
+    /* Template section */
+    .template-container {
+      background: white;
+      border: 2px solid var(--navy);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-top: 20px;
+    }
+
+    .template-bar {
+      background: var(--navy);
+      color: white;
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .copy-btn {
+      background: white;
+      color: var(--navy);
+      border: none;
+      padding: 6px 16px;
+      border-radius: 6px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: background 0.2s;
+    }
+
+    .copy-btn:hover { background: var(--light-blue); color: white; }
+
+    .template-body {
+      padding: 32px;
+    }
+
+    /* ===== EMAIL TEMPLATE STYLES (inline-friendly previews) ===== */
+
+    .email-greeting {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .email-headline {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      line-height: 1.3;
+    }
+
+    .email-headline a,
+    .email-headline .highlight {
+      color: var(--steel);
+      text-decoration: none;
+      border-bottom: 2px solid var(--light-blue);
+    }
+
+    .email-body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      font-size: 15px;
+      color: #333;
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+
+    .email-img-block {
+      margin: 20px 0;
+      border-radius: 8px;
+      overflow: hidden;
+      max-width: 500px;
+    }
+
+    .email-img-block img {
+      width: 100%;
+      display: block;
+    }
+
+    .email-img-placeholder {
+      background: linear-gradient(135deg, var(--light-blue), var(--sage));
+      height: 260px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 1.1rem;
+      border-radius: 8px;
+    }
+
+    .email-section-label {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-top: 24px;
+      margin-bottom: 6px;
+      padding-bottom: 4px;
+      border-bottom: 2px solid var(--light-blue);
+      display: inline-block;
+    }
+
+    .email-detail-row {
+      font-size: 15px;
+      margin-bottom: 4px;
+      line-height: 1.7;
+    }
+
+    .email-detail-row strong {
+      color: var(--navy);
+    }
+
+    .email-list {
+      padding-left: 20px;
+      margin: 8px 0 16px 0;
+      font-size: 15px;
+      line-height: 1.8;
+    }
+
+    .email-cta {
+      display: inline-block;
+      background: var(--steel);
+      color: white !important;
+      text-decoration: none;
+      padding: 10px 24px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 15px;
+      margin: 12px 0;
+      transition: background 0.2s;
+    }
+
+    .email-cta:hover { background: var(--navy); }
+
+    .email-link {
+      color: var(--steel);
+      font-weight: 600;
+      text-decoration: underline;
+    }
+
+    .email-info-box {
+      background: #f4f7fa;
+      border-left: 4px solid var(--purple);
+      padding: 16px 20px;
+      border-radius: 0 8px 8px 0;
+      margin: 16px 0;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    .email-divider {
+      border: none;
+      border-top: 1px solid #e0e0e0;
+      margin: 24px 0;
+    }
+
+    .email-signoff {
+      font-size: 15px;
+      color: #555;
+      line-height: 1.7;
+      margin-top: 24px;
+    }
+
+    .email-signoff .name {
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .email-footer {
+      font-size: 13px;
+      color: #999;
+      margin-top: 32px;
+      padding-top: 16px;
+      border-top: 1px solid #eee;
+    }
+
+    /* Quick ref table */
+    .ref-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+
+    .ref-table th {
+      text-align: left;
+      padding: 10px 14px;
+      background: var(--navy);
+      color: white;
+      font-weight: 600;
+    }
+
+    .ref-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .ref-table tr:nth-child(even) td {
+      background: #f8f9fa;
+    }
+
+    .ref-table code {
+      background: #eef;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-size: 0.82rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .ds-header { padding: 40px 20px; }
+      .ds-header h1 { font-size: 2rem; }
+      .ds-section { padding: 32px 20px; }
+      .tone-grid { grid-template-columns: 1fr; }
+      .color-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="ds-header">
+    <h1>Class of 2028</h1>
+    <p>Email Design System &mdash; Harvey Mudd College</p>
+  </header>
+
+  <!-- ===== NAV ===== -->
+  <nav class="ds-nav">
+    <a href="#colors">Colors</a>
+    <a href="#typography">Typography</a>
+    <a href="#components">Components</a>
+    <a href="#tone">Voice &amp; Tone</a>
+    <a href="#structure">Email Structure</a>
+    <a href="#template">Template</a>
+  </nav>
+
+  <!-- ===== COLORS ===== -->
+  <section id="colors" class="ds-section">
+    <h2>Color Palette</h2>
+    <p>Our five-color palette. Use Navy and Steel for headings and links. Purple for accents and info boxes. Sage for positive highlights. Light Blue for borders and soft backgrounds.</p>
+    <div class="color-grid">
+      <div class="color-card">
+        <div class="swatch" style="background: #7F7CAF;"></div>
+        <div class="info"><strong>Purple</strong><code>#7F7CAF</code></div>
+      </div>
+      <div class="color-card">
+        <div class="swatch" style="background: #9fb4c7;"></div>
+        <div class="info"><strong>Light Blue</strong><code>#9fb4c7</code></div>
+      </div>
+      <div class="color-card">
+        <div class="swatch" style="background: #28587b;"></div>
+        <div class="info"><strong>Navy</strong><code>#28587b</code></div>
+      </div>
+      <div class="color-card">
+        <div class="swatch" style="background: #9fb798;"></div>
+        <div class="info"><strong>Sage</strong><code>#9fb798</code></div>
+      </div>
+      <div class="color-card">
+        <div class="swatch" style="background: #4f7fa9;"></div>
+        <div class="info"><strong>Steel</strong><code>#4f7fa9</code></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TYPOGRAPHY ===== -->
+  <section id="typography" class="ds-section">
+    <h2>Typography</h2>
+    <p>We use the system font stack for maximum compatibility across email clients. Keep it readable and casual.</p>
+
+    <div class="type-example">
+      <div class="label">Greeting</div>
+      <div style="font-size: 18px; font-weight: 700; color: #28587b; text-transform: uppercase; letter-spacing: 0.5px;">HELLO 2028:</div>
+    </div>
+
+    <div class="type-example">
+      <div class="label">Headline</div>
+      <div style="font-size: 22px; font-weight: 700;">We have our <span style="color: #4f7fa9; border-bottom: 2px solid #9fb4c7;">QUARTER ZIP DESIGN</span></div>
+    </div>
+
+    <div class="type-example">
+      <div class="label">Body Text</div>
+      <div style="font-size: 15px; line-height: 1.7; color: #333;">Congratulations to <strong>Ellen Yu</strong> for the winning design! After reviewing class feedback, they made a few small adjustments.</div>
+    </div>
+
+    <div class="type-example">
+      <div class="label">Section Label</div>
+      <div style="font-size: 16px; font-weight: 700; color: #28587b; border-bottom: 2px solid #9fb4c7; display: inline-block; padding-bottom: 4px;">Order Details</div>
+    </div>
+
+    <div class="type-example">
+      <div class="label">Detail Text</div>
+      <div style="font-size: 15px; line-height: 1.7;"><strong style="color: #28587b;">Price:</strong> $50 (standard quarter zip)</div>
+    </div>
+
+    <div class="type-example">
+      <div class="label">Link</div>
+      <div><a href="#" style="color: #4f7fa9; font-weight: 600; text-decoration: underline;">FORM LINK</a></div>
+    </div>
+  </section>
+
+  <!-- ===== COMPONENTS ===== -->
+  <section id="components" class="ds-section">
+    <h2>Components</h2>
+    <p>Reusable building blocks for class emails. Mix and match as needed.</p>
+
+    <!-- Greeting -->
+    <div class="component-card">
+      <h3>Greeting</h3>
+      <div class="component-preview">
+        <div class="email-greeting">HELLO 2028:</div>
+      </div>
+      <p class="component-note">Always all-caps. Always "HELLO 2028:" with a colon. This is our signature opener.</p>
+    </div>
+
+    <!-- Headline -->
+    <div class="component-card">
+      <h3>Announcement Headline</h3>
+      <div class="component-preview">
+        <div class="email-headline">We have our <span class="highlight">QUARTER ZIP DESIGN</span></div>
+      </div>
+      <p class="component-note">Big and bold. Key phrase highlighted in Steel blue. Feel free to throw in emojis for hype.</p>
+    </div>
+
+    <!-- Image Block -->
+    <div class="component-card">
+      <h3>Image Block</h3>
+      <div class="component-preview">
+        <div class="email-img-block">
+          <div class="email-img-placeholder">Your image here (max-width: 500px)</div>
+        </div>
+      </div>
+      <p class="component-note">Keep images under 500px wide. Rounded corners. Use for merch photos, event flyers, etc.</p>
+    </div>
+
+    <!-- Section Label -->
+    <div class="component-card">
+      <h3>Section Label</h3>
+      <div class="component-preview">
+        <div class="email-section-label">Order Details</div>
+      </div>
+      <p class="component-note">Navy text with a Light Blue underline. Use to break up different topics within an email.</p>
+    </div>
+
+    <!-- Detail Row -->
+    <div class="component-card">
+      <h3>Detail Row</h3>
+      <div class="component-preview">
+        <div class="email-detail-row"><strong>Price:</strong> $50 (standard quarter zip)</div>
+        <div class="email-detail-row"><strong>Pickup:</strong> TBD, we'll send an update once the order arrives</div>
+      </div>
+      <p class="component-note">Bold label in Navy, regular value text. One detail per line.</p>
+    </div>
+
+    <!-- Bullet List -->
+    <div class="component-card">
+      <h3>Bullet List</h3>
+      <div class="component-preview">
+        <ul class="email-list">
+          <li>$50 (standard quarter zip)</li>
+          <li>Design submitters: <strong>$10 off</strong></li>
+        </ul>
+      </div>
+      <p class="component-note">Use for options, pricing tiers, or multiple items. Bold the key takeaway.</p>
+    </div>
+
+    <!-- CTA Button -->
+    <div class="component-card">
+      <h3>Call-to-Action Button</h3>
+      <div class="component-preview">
+        <a href="#" class="email-cta">ORDER FORM</a>
+      </div>
+      <p class="component-note">Steel blue button for important links (forms, sign-ups, RSVPs). Keep text short and action-oriented.</p>
+    </div>
+
+    <!-- Inline Link -->
+    <div class="component-card">
+      <h3>Inline Link</h3>
+      <div class="component-preview">
+        <div class="email-body">Fill out the <a href="#" class="email-link">order form</a> by Saturday 12/14.</div>
+      </div>
+      <p class="component-note">Steel blue, underlined, bold. Use for links within body text.</p>
+    </div>
+
+    <!-- Info Box -->
+    <div class="component-card">
+      <h3>Info Box</h3>
+      <div class="component-preview">
+        <div class="email-info-box">
+          <strong>Venmo:</strong> @Felix-Peng-2<br>
+          <strong>Zelle:</strong> 626-491-8379<br>
+          Include your name + "Merch" in the message.
+        </div>
+      </div>
+      <p class="component-note">Purple left border. Use for payment info, important notes, or anything that needs to stand out from body text.</p>
+    </div>
+
+    <!-- Signoff -->
+    <div class="component-card">
+      <h3>Sign-off</h3>
+      <div class="component-preview">
+        <div class="email-signoff">
+          If you have any questions, feel free to reach out!<br><br>
+          <span class="name">Felix Peng</span><br>
+          Class of 2028 President
+        </div>
+      </div>
+      <p class="component-note">Casual, friendly. Always end with an invitation to reach out. Name in Navy bold.</p>
+    </div>
+  </section>
+
+  <!-- ===== VOICE & TONE ===== -->
+  <section id="tone" class="ds-section">
+    <h2>Voice &amp; Tone</h2>
+    <p>We're talking to our classmates, not writing a corporate memo. Keep it real.</p>
+
+    <div class="tone-grid">
+      <div class="tone-do">
+        <h3>Do</h3>
+        <ul>
+          <li>Write like you're texting a group chat (but readable)</li>
+          <li>Use emojis when it fits the vibe</li>
+          <li>Bold important names, prices, dates</li>
+          <li>Keep sentences short and punchy</li>
+          <li>Start with hype if the news is exciting</li>
+          <li>Use "we" and "our" &mdash; it's a class thing</li>
+          <li>Be direct about what people need to do</li>
+        </ul>
+      </div>
+      <div class="tone-dont">
+        <h3>Don't</h3>
+        <ul>
+          <li>Sound like a formal announcement</li>
+          <li>Use "Dear Class of 2028" or "Greetings"</li>
+          <li>Write walls of text with no formatting</li>
+          <li>Bury the important info in paragraphs</li>
+          <li>Be vague about deadlines or next steps</li>
+          <li>Forget to include payment/form/RSVP details</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== EMAIL STRUCTURE ===== -->
+  <section id="structure" class="ds-section">
+    <h2>Email Structure</h2>
+    <p>The standard layout for class emails. Not every email needs every section, but this is the go-to order.</p>
+
+    <table class="ref-table">
+      <thead>
+        <tr>
+          <th>Section</th>
+          <th>Required?</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Greeting</strong></td>
+          <td>Always</td>
+          <td><code>HELLO 2028:</code></td>
+        </tr>
+        <tr>
+          <td><strong>Headline</strong></td>
+          <td>Always</td>
+          <td>One-liner about what this email is about</td>
+        </tr>
+        <tr>
+          <td><strong>Context / Body</strong></td>
+          <td>Usually</td>
+          <td>1-3 sentences max. Get to the point.</td>
+        </tr>
+        <tr>
+          <td><strong>Image</strong></td>
+          <td>If relevant</td>
+          <td>Merch, flyers, event photos</td>
+        </tr>
+        <tr>
+          <td><strong>Details</strong></td>
+          <td>If applicable</td>
+          <td>Price, dates, location &mdash; use section labels + detail rows</td>
+        </tr>
+        <tr>
+          <td><strong>Action / CTA</strong></td>
+          <td>Usually</td>
+          <td>Form link, RSVP, sign-up &mdash; make it obvious</td>
+        </tr>
+        <tr>
+          <td><strong>Payment Info</strong></td>
+          <td>If applicable</td>
+          <td>Use the info box component</td>
+        </tr>
+        <tr>
+          <td><strong>Sign-off</strong></td>
+          <td>Always</td>
+          <td>Friendly close + name + title</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ===== COPY-PASTE TEMPLATE ===== -->
+  <section id="template" class="ds-section">
+    <h2>Copy-Paste Email Template</h2>
+    <p>A ready-to-use template with all inline styles. Copy the HTML below and paste into your email editor. Replace the bracketed placeholders.</p>
+
+    <div class="template-container">
+      <div class="template-bar">
+        <span>Email Template Preview</span>
+        <button class="copy-btn" onclick="copyTemplate()">Copy HTML</button>
+      </div>
+      <div class="template-body">
+
+        <!-- ===== START OF ACTUAL EMAIL TEMPLATE ===== -->
+        <div id="email-template-content">
+          <!-- Greeting -->
+          <div style="font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; font-size: 18px; font-weight: 700; color: #28587b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 16px;">
+            HELLO 2028:
+          </div>
+
+          <!-- Headline -->
+          <div style="font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; font-size: 22px; font-weight: 700; margin-bottom: 16px; line-height: 1.3;">
+            [Your headline here] <span style="color: #4f7fa9; border-bottom: 2px solid #9fb4c7;">[HIGHLIGHTED TOPIC]</span>
+          </div>
+
+          <!-- Body -->
+          <div style="font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; font-size: 15px; color: #333; line-height: 1.7; margin-bottom: 16px;">
+            [Your body text here. Keep it to 1-3 sentences. Bold <strong>important names</strong> and <strong>key details</strong>.]
+          </div>
+
+          <!-- Image (delete this block if no image) -->
+          <div style="margin: 20px 0; border-radius: 8px; overflow: hidden; max-width: 500px;">
+            <img src="[YOUR_IMAGE_URL]" alt="[Image description]" style="width: 100%; display: block; border-radius: 8px;">
+          </div>
+
+          <!-- Section Label -->
+          <div style="font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; font-size: 16px; font-weight: 700; color: #28587b; margin-top: 24px; margin-bottom: 6px; padding-bottom: 4px; border-bottom: 2px solid #9fb4c7; display: inline-block;">
+            [Section Title]
+          </div>
+
+          <!-- Detail Rows -->
+          <div style="font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; font-size: 15px; line-height: 1.7; margin-bottom: 4px;">
+            <strong style="color: #28587b;">[Label]:</strong> [Value]
+          </div>
+          <div style="font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; font-size: 15px; line-height: 1.7; margin-bottom: 4px;">
+            <strong style="color: #28587b;">[Label]:</strong> [Value]
+          </div>
+
+          <!-- Bullet List (delete if not needed) -->
+          <ul style="padding-left: 20px; margin: 8px 0 16px 0; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; font-size: 15px; line-height: 1.8;">
+            <li>[Item one]</li>
+            <li>[Item two]: <strong>[highlight]</strong></li>
+          </ul>
+
+          <!-- CTA Button -->
+          <div style="margin: 20px 0;">
+            <a href="[YOUR_LINK]" style="display: inline-block; background: #4f7fa9; color: white; text-decoration: none; padding: 10px 24px; border-radius: 6px; font-weight: 700; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; font-size: 15px;">[BUTTON TEXT]</a>
+          </div>
+
+          <!-- Info Box (for payment details, special notes, etc.) -->
+          <div style="background: #f4f7fa; border-left: 4px solid #7F7CAF; padding: 16px 20px; border-radius: 0 8px 8px 0; margin: 16px 0; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; font-size: 15px; line-height: 1.7;">
+            <strong>[Label]:</strong> [Value]<br>
+            <strong>[Label]:</strong> [Value]<br>
+            [Additional instructions]
+          </div>
+
+          <!-- Divider -->
+          <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 24px 0;">
+
+          <!-- Sign-off -->
+          <div style="font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; font-size: 15px; color: #555; line-height: 1.7; margin-top: 24px;">
+            If you have any questions, feel free to reach out!<br><br>
+            <span style="font-weight: 700; color: #28587b;">Felix Peng</span><br>
+            Class of 2028 President
+          </div>
+        </div>
+        <!-- ===== END OF ACTUAL EMAIL TEMPLATE ===== -->
+
+      </div>
+    </div>
+
+    <!-- Raw HTML code block -->
+    <div style="margin-top: 32px;">
+      <div class="component-card">
+        <h3>Usage Instructions</h3>
+        <ol style="padding-left: 20px; line-height: 2; font-size: 0.95rem;">
+          <li>Click <strong>Copy HTML</strong> above to copy the template source</li>
+          <li>Paste into your email client's HTML editor (or a tool like <a href="https://htmlemail.io/inline/" class="email-link">htmlemail.io</a>)</li>
+          <li>Replace all <code>[bracketed placeholders]</code> with your content</li>
+          <li>Delete any sections you don't need (image block, bullet list, info box, etc.)</li>
+          <li>Send it out and let 2028 know what's up</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer style="text-align: center; padding: 40px; color: #999; font-size: 0.85rem; border-top: 1px solid #eee;">
+    HMC Class of 2028 Email Design System &bull; Built for the people, by the prez
+  </footer>
+
+  <script>
+    function copyTemplate() {
+      const templateEl = document.getElementById('email-template-content');
+      const html = templateEl.innerHTML;
+
+      navigator.clipboard.writeText(html).then(() => {
+        const btn = document.querySelector('.copy-btn');
+        btn.textContent = 'Copied!';
+        setTimeout(() => { btn.textContent = 'Copy HTML'; }, 2000);
+      }).catch(() => {
+        // Fallback
+        const textarea = document.createElement('textarea');
+        textarea.value = html;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        const btn = document.querySelector('.copy-btn');
+        btn.textContent = 'Copied!';
+        setTimeout(() => { btn.textContent = 'Copy HTML'; }, 2000);
+      });
+    }
+  </script>
+
+</body>
+</html>

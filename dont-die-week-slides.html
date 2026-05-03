@@ -1,0 +1,1364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Don't Die Week, Class of 2028</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Permanent+Marker&family=Caveat:wght@400;700&family=Anton&family=Patrick+Hand&family=Archivo+Black&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #d94f4f;
+    --coral: #f06b5b;
+    --orange: #e87d2f;
+    --sage: #9fb798;
+    --green: #2e8b57;
+    --green-bright: #4caf50;
+    --navy: #28587b;
+    --gold: #fff3b0;
+    --gold-deep: #f5c542;
+    --bronze: #cd7f32;
+    --silver: #c0c0c0;
+    --ink: #222;
+    --paper: #fffdf7;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0; height: 100%; width: 100%;
+    background: #000;
+    overflow: hidden;
+    font-family: 'Patrick Hand', sans-serif;
+    color: var(--ink);
+  }
+  .deck {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+  }
+  .slide {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    padding: 4vh 5vw;
+    overflow: hidden;
+  }
+  .slide.active { display: flex; flex-direction: column; }
+
+  /* Navigation */
+  .nav {
+    position: fixed;
+    bottom: 16px;
+    right: 20px;
+    z-index: 100;
+    font-family: 'Patrick Hand', sans-serif;
+    color: rgba(0,0,0,0.5);
+    font-size: 14px;
+    background: rgba(255,255,255,0.7);
+    padding: 4px 12px;
+    border-radius: 20px;
+  }
+  .nav button {
+    background: none; border: none; cursor: pointer;
+    font-size: 18px; color: var(--navy); padding: 0 6px;
+    font-family: inherit;
+  }
+  .nav button:hover { color: var(--red); }
+
+  .hint {
+    position: fixed;
+    bottom: 16px;
+    left: 20px;
+    z-index: 100;
+    font-family: 'Caveat', cursive;
+    color: rgba(0,0,0,0.4);
+    font-size: 18px;
+  }
+
+  /* Yellow highlight effect */
+  .hl {
+    background: var(--gold);
+    padding: 0 8px;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+  .hl-deep {
+    background: var(--gold-deep);
+    padding: 0 8px;
+  }
+
+  /* Sticker doodle dots */
+  .dot {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .scribble {
+    position: absolute;
+    pointer-events: none;
+  }
+  .star {
+    position: absolute;
+    font-family: 'Bungee', sans-serif;
+    pointer-events: none;
+  }
+
+  /* SLIDE 1 : TITLE */
+  #s1 {
+    background:
+      radial-gradient(circle at 20% 30%, rgba(217,79,79,0.15), transparent 40%),
+      radial-gradient(circle at 80% 70%, rgba(232,125,47,0.18), transparent 40%),
+      var(--paper);
+    align-items: center; justify-content: center; text-align: center;
+  }
+  #s1 .title {
+    font-family: 'Bungee', sans-serif;
+    font-size: 13vw;
+    line-height: 0.85;
+    color: var(--red);
+    text-shadow: 6px 6px 0 var(--gold), 12px 12px 0 var(--navy);
+    transform: rotate(-2deg);
+    margin-bottom: 2vh;
+  }
+  #s1 .sub {
+    font-family: 'Permanent Marker', cursive;
+    font-size: 3vw;
+    color: var(--orange);
+    transform: rotate(1.5deg);
+    margin-bottom: 4vh;
+  }
+  #s1 .date {
+    font-family: 'Patrick Hand', sans-serif;
+    font-size: 2.2vw;
+    color: var(--navy);
+    background: var(--gold);
+    padding: 4px 24px;
+    transform: rotate(-1deg);
+    display: inline-block;
+  }
+  #s1 .doodle1, #s1 .doodle2, #s1 .doodle3, #s1 .doodle4, #s1 .ico1 { position: absolute; }
+  #s1 .doodle1 { top: 8%; left: 6%; font-size: 6vw; color: var(--green); transform: rotate(-15deg); font-family: 'Permanent Marker'; }
+  #s1 .doodle2 { bottom: 10%; right: 8%; font-size: 5vw; color: var(--orange); transform: rotate(12deg); font-family: 'Caveat'; font-weight: 700; }
+  #s1 .doodle3 { top: 15%; right: 10%; font-size: 4vw; transform: rotate(20deg); }
+  #s1 .doodle4 { bottom: 18%; left: 12%; font-size: 4vw; transform: rotate(-25deg); }
+  #s1 .ico1 { top: 6%; right: 12%; font-size: 3vw; }
+
+  /* SLIDE 2 : Contest Winners divider */
+  #s2 {
+    background: var(--orange);
+    align-items: center; justify-content: center; text-align: center;
+  }
+  #s2 .big {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 16vw;
+    line-height: 0.9;
+    color: var(--paper);
+    transform: rotate(-3deg);
+    text-shadow: 8px 8px 0 var(--navy);
+  }
+  #s2 .sub {
+    font-family: 'Permanent Marker', cursive;
+    font-size: 4vw;
+    color: var(--gold);
+    margin-top: 3vh;
+    transform: rotate(1deg);
+  }
+  #s2 .corner {
+    position: absolute;
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    color: var(--paper);
+  }
+  #s2 .corner.tl { top: 6%; left: 6%; font-size: 3vw; transform: rotate(-15deg); }
+  #s2 .corner.br { bottom: 6%; right: 6%; font-size: 3vw; transform: rotate(15deg); }
+
+  /* SLIDE 3 : Hoodie Design */
+  #s3 {
+    background: var(--paper);
+    flex-direction: column;
+  }
+  #s3 .header {
+    font-family: 'Bungee', sans-serif;
+    font-size: 5vw;
+    color: var(--red);
+    transform: rotate(-1deg);
+    margin-bottom: 2vh;
+    text-align: center;
+  }
+  #s3 .winners {
+    display: flex; justify-content: space-around; align-items: stretch;
+    flex: 1; gap: 2vw;
+  }
+  #s3 .card {
+    flex: 1;
+    border: 4px dashed var(--ink);
+    padding: 2vh 1vw;
+    background: var(--paper);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center;
+    box-shadow: 8px 8px 0 var(--gold);
+  }
+  #s3 .card:nth-child(1) { transform: rotate(-2deg); border-color: var(--red); }
+  #s3 .card:nth-child(2) { transform: rotate(1.5deg); border-color: var(--orange); }
+  #s3 .card:nth-child(3) { transform: rotate(-1deg); border-color: var(--green); }
+  #s3 .placeholder {
+    width: 80%; aspect-ratio: 1/1;
+    border: 2px solid #aaa;
+    background: repeating-linear-gradient(45deg, #f0f0f0, #f0f0f0 10px, #e0e0e0 10px, #e0e0e0 20px);
+    display: flex; align-items: center; justify-content: center;
+    color: #888; font-family: 'Caveat', cursive; font-size: 1.4vw;
+    margin-bottom: 1vh;
+  }
+  #s3 .name {
+    font-family: 'Permanent Marker', cursive;
+    font-size: 2.4vw;
+  }
+  #s3 .card:nth-child(1) .name { color: var(--red); }
+  #s3 .card:nth-child(2) .name { color: var(--orange); }
+  #s3 .card:nth-child(3) .name { color: var(--green); }
+  #s3 .footer {
+    text-align: center;
+    margin-top: 2vh;
+    font-family: 'Patrick Hand', sans-serif;
+    font-size: 2.2vw;
+  }
+  #s3 .footer .hl-deep {
+    font-family: 'Permanent Marker', cursive;
+  }
+
+  /* SLIDE 4 : Vent Cleaning */
+  #s4 {
+    background: var(--sage);
+    align-items: center; justify-content: center; text-align: center;
+  }
+  #s4 .title {
+    font-family: 'Bungee', sans-serif;
+    font-size: 6vw;
+    color: var(--paper);
+    margin-bottom: 4vh;
+    text-shadow: 6px 6px 0 var(--ink);
+    transform: rotate(-2deg);
+  }
+  #s4 .winner {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 14vw;
+    color: var(--gold);
+    line-height: 0.9;
+    transform: rotate(2deg);
+    text-shadow: 8px 8px 0 var(--navy);
+  }
+  #s4 .sub {
+    font-family: 'Caveat', cursive; font-weight: 700;
+    font-size: 4vw; color: var(--paper);
+    transform: rotate(-1deg);
+    margin-top: 2vh;
+  }
+  #s4 .bubble {
+    position: absolute;
+    bottom: 12%; right: 10%;
+    background: var(--paper);
+    padding: 16px 32px;
+    border-radius: 50px;
+    font-family: 'Permanent Marker', cursive;
+    font-size: 3vw;
+    color: var(--red);
+    transform: rotate(8deg);
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+  #s4 .bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -20px; left: 30px;
+    border: 16px solid transparent;
+    border-top-color: var(--paper);
+    border-bottom: 0;
+  }
+  #s4 .boba-tag {
+    position: absolute; top: 10%; right: 8%;
+    font-family: 'Caveat', cursive; font-weight: 700;
+    color: var(--paper); font-size: 2.5vw;
+    transform: rotate(15deg);
+  }
+
+  /* SLIDE 5 : Stompers Introduction */
+  #s5 {
+    background:
+      radial-gradient(circle at 90% 10%, rgba(232,125,47,0.2), transparent 30%),
+      var(--paper);
+  }
+  #s5 .title {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 5vw;
+    color: var(--green);
+    line-height: 0.95;
+    transform: rotate(-1deg);
+    margin-bottom: 2vh;
+  }
+  #s5 .grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 3vw;
+    flex: 1;
+  }
+  #s5 .left { display: flex; flex-direction: column; justify-content: center; gap: 2vh; }
+  #s5 .right { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 2vh; }
+  #s5 .stat-line {
+    font-family: 'Patrick Hand', sans-serif;
+    font-size: 2.2vw;
+    line-height: 1.3;
+  }
+  #s5 .stat-line b { font-family: 'Permanent Marker', cursive; font-weight: 400; color: var(--red); }
+  #s5 .big-num {
+    font-family: 'Bungee', sans-serif;
+    font-size: 7vw;
+    color: var(--navy);
+    line-height: 0.9;
+    text-align: center;
+    transform: rotate(-2deg);
+  }
+  #s5 .big-num small { display: block; font-size: 1.8vw; color: var(--orange); margin-top: 1vh; font-family: 'Caveat', cursive; transform: rotate(2deg); }
+  #s5 .points-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1vw;
+    width: 100%;
+    margin-top: 2vh;
+  }
+  #s5 .pt {
+    text-align: center;
+    padding: 2vh 1vw;
+    border: 3px solid var(--ink);
+    font-family: 'Bungee', sans-serif;
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+  #s5 .pt .place { font-size: 2vw; }
+  #s5 .pt .pts { font-size: 4.5vw; line-height: 1; }
+  #s5 .pt:nth-child(1) { background: var(--gold-deep); transform: rotate(-2deg); }
+  #s5 .pt:nth-child(2) { background: var(--silver); transform: rotate(1.5deg); }
+  #s5 .pt:nth-child(3) { background: var(--bronze); color: var(--paper); transform: rotate(-1.5deg); }
+  #s5 .corner-sticker {
+    position: absolute;
+    top: 18%; right: 6%;
+    background: var(--red); color: var(--paper);
+    font-family: 'Permanent Marker', cursive;
+    font-size: 1.5vw;
+    padding: 8px 16px;
+    transform: rotate(8deg);
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+
+  /* SLIDE 6 : CC Gold (Arnav) */
+  #s6 {
+    background: linear-gradient(135deg, #f5c542 0%, #e87d2f 100%);
+    flex-direction: column;
+    color: var(--navy);
+  }
+  #s6 .label {
+    font-family: 'Bungee', sans-serif;
+    font-size: 4vw;
+    color: var(--navy);
+    transform: rotate(-2deg);
+  }
+  #s6 .winner {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 12vw;
+    color: var(--paper);
+    text-shadow: 8px 8px 0 var(--navy);
+    line-height: 0.9;
+    transform: rotate(1deg);
+    margin: 1vh 0;
+  }
+  #s6 .stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5vh 3vw;
+    margin-top: 3vh;
+    font-family: 'Patrick Hand', sans-serif;
+    font-size: 1.9vw;
+    line-height: 1.3;
+  }
+  #s6 .stats b {
+    font-family: 'Permanent Marker', cursive;
+    color: var(--red);
+    font-weight: 400;
+  }
+  #s6 .medal {
+    position: absolute; top: 8%; right: 8%;
+    font-size: 8vw;
+    transform: rotate(15deg);
+  }
+  #s6 .boba-tag {
+    position: absolute; bottom: 6%; right: 6%;
+    font-family: 'Caveat', cursive; font-weight: 700;
+    background: var(--paper);
+    color: var(--red);
+    padding: 8px 16px;
+    transform: rotate(-5deg);
+    font-size: 2vw;
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+
+  /* SLIDE 7 : The Big One divider */
+  #s7 {
+    background: var(--red);
+    align-items: center; justify-content: center; text-align: center;
+  }
+  #s7 .big {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 18vw;
+    color: var(--paper);
+    line-height: 0.85;
+    text-shadow: 10px 10px 0 var(--navy);
+    transform: rotate(-2deg);
+  }
+  #s7 .sub {
+    font-family: 'Permanent Marker', cursive;
+    font-size: 3vw;
+    color: var(--gold);
+    margin-top: 3vh;
+    transform: rotate(1.5deg);
+  }
+  #s7 .sub2 {
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: 4vw;
+    color: var(--paper);
+    margin-top: 2vh;
+    background: var(--navy);
+    padding: 4px 24px;
+    transform: rotate(-1deg);
+    display: inline-block;
+  }
+  #s7 .doodle {
+    position: absolute;
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    color: var(--paper);
+  }
+  #s7 .doodle.tl { top: 8%; left: 8%; font-size: 4vw; transform: rotate(-15deg); }
+  #s7 .doodle.br { bottom: 8%; right: 8%; font-size: 4vw; transform: rotate(15deg); }
+
+  /* SLIDE 8 : Bronze, Felix */
+  #s8 {
+    background: linear-gradient(160deg, var(--bronze) 0%, #8b5a2b 100%);
+    color: var(--paper);
+  }
+  #s8 .label {
+    font-family: 'Bungee', sans-serif;
+    font-size: 4vw;
+    transform: rotate(-2deg);
+  }
+  #s8 .winner {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 11vw;
+    color: var(--gold);
+    line-height: 0.9;
+    transform: rotate(1deg);
+    text-shadow: 8px 8px 0 var(--navy);
+    margin-top: 1vh;
+  }
+  #s8 .stats {
+    margin-top: 3vh;
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5vh 3vw;
+    font-family: 'Patrick Hand', sans-serif;
+    font-size: 1.9vw; line-height: 1.3;
+  }
+  #s8 .stats b { font-family: 'Permanent Marker', cursive; color: var(--gold); font-weight: 400; }
+  #s8 .joke {
+    position: absolute; bottom: 8%; left: 5%;
+    background: var(--paper); color: var(--red);
+    font-family: 'Caveat', cursive; font-weight: 700;
+    font-size: 2.2vw;
+    padding: 12px 20px;
+    transform: rotate(-3deg);
+    box-shadow: 4px 4px 0 var(--ink);
+    max-width: 50%;
+  }
+  #s8 .boba-tag {
+    position: absolute; top: 8%; right: 8%;
+    font-family: 'Permanent Marker', cursive;
+    color: var(--paper);
+    background: var(--red);
+    padding: 6px 14px;
+    transform: rotate(8deg);
+    font-size: 1.8vw;
+  }
+
+  /* SLIDE 9 : Silver, Charlotte */
+  #s9 {
+    background: linear-gradient(160deg, #d8d8d8 0%, #a0a0a0 100%);
+    color: var(--ink);
+  }
+  #s9 .label {
+    font-family: 'Bungee', sans-serif;
+    font-size: 4vw;
+    color: var(--navy);
+    transform: rotate(-2deg);
+  }
+  #s9 .winner {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 10vw;
+    color: var(--red);
+    line-height: 0.9;
+    transform: rotate(1deg);
+    text-shadow: 6px 6px 0 var(--paper);
+    margin-top: 1vh;
+  }
+  #s9 .stats {
+    margin-top: 3vh;
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5vh 3vw;
+    font-family: 'Patrick Hand', sans-serif;
+    font-size: 1.9vw; line-height: 1.3;
+  }
+  #s9 .stats b { font-family: 'Permanent Marker', cursive; color: var(--red); font-weight: 400; }
+  #s9 .quote {
+    margin-top: 3vh;
+    font-family: 'Caveat', cursive; font-weight: 700;
+    font-size: 2.6vw; color: var(--navy);
+    transform: rotate(-1deg);
+  }
+  #s9 .star1, #s9 .star2 { position: absolute; }
+  #s9 .star1 { top: 10%; right: 12%; font-size: 6vw; color: var(--red); transform: rotate(20deg); font-family: 'Permanent Marker'; }
+  #s9 .star2 { bottom: 12%; right: 8%; font-size: 5vw; color: var(--orange); transform: rotate(-25deg); font-family: 'Permanent Marker'; }
+  #s9 .boba-tag {
+    position: absolute; bottom: 8%; right: 12%;
+    font-family: 'Permanent Marker', cursive;
+    color: var(--paper);
+    background: var(--green);
+    padding: 6px 14px;
+    transform: rotate(-8deg);
+    font-size: 1.8vw;
+  }
+
+  /* SLIDE 10 : Gold, Henry, the BIG REVEAL */
+  #s10 {
+    background:
+      radial-gradient(circle at 30% 20%, rgba(255,243,176,0.6), transparent 40%),
+      radial-gradient(circle at 70% 80%, rgba(245,197,66,0.4), transparent 40%),
+      linear-gradient(135deg, var(--gold-deep) 0%, var(--orange) 50%, var(--red) 100%);
+    color: var(--paper);
+  }
+  #s10 .label {
+    font-family: 'Bungee', sans-serif;
+    font-size: 5vw;
+    color: var(--navy);
+    transform: rotate(-2deg);
+    text-shadow: 4px 4px 0 var(--paper);
+  }
+  #s10 .winner {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 11vw;
+    color: var(--paper);
+    line-height: 0.85;
+    transform: rotate(1.5deg);
+    text-shadow: 10px 10px 0 var(--navy), 14px 14px 0 var(--red);
+    margin-top: 1vh;
+  }
+  #s10 .mega-stat {
+    margin-top: 1.5vh;
+    display: flex; align-items: baseline; gap: 2vw;
+    transform: rotate(-1deg);
+  }
+  #s10 .mega-stat .num {
+    font-family: 'Bungee', sans-serif;
+    font-size: 11vw;
+    color: var(--gold);
+    text-shadow: 6px 6px 0 var(--navy);
+    line-height: 0.9;
+  }
+  #s10 .mega-stat .lbl {
+    font-family: 'Permanent Marker', cursive;
+    font-size: 2.6vw;
+    color: var(--paper);
+    line-height: 1.2;
+  }
+  #s10 .mega-stat .lbl small { display: block; font-family: 'Caveat', cursive; font-size: 2vw; }
+  #s10 .extra {
+    margin-top: 1.5vh;
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 1vh 3vw;
+    font-family: 'Patrick Hand', sans-serif;
+    font-size: 1.7vw; line-height: 1.2;
+    color: var(--paper);
+  }
+  #s10 .extra b { font-family: 'Permanent Marker', cursive; color: var(--navy); font-weight: 400; }
+  #s10 .c1, #s10 .c2, #s10 .c3, #s10 .c4 { position: absolute; pointer-events: none; }
+  #s10 .c1 { top: 1%; right: 14%; font-size: 2.5vw; color: var(--red); transform: rotate(-15deg); font-family: 'Permanent Marker'; }
+  #s10 .c2 { display: none; }
+  #s10 .c3 { display: none; }
+  #s10 .c4 { bottom: 4%; right: 3%; font-size: 4vw; color: var(--paper); transform: rotate(-10deg); font-family: 'Permanent Marker'; }
+  #s10 .boba-tag {
+    position: absolute; top: 1%; right: 1%;
+    font-family: 'Caveat', cursive; font-weight: 700;
+    color: var(--paper);
+    background: var(--navy);
+    padding: 4px 10px;
+    transform: rotate(8deg);
+    font-size: 1.2vw;
+    opacity: 0.85;
+  }
+
+  /* SLIDE 11 : Fun awards divider */
+  #s11 {
+    background:
+      conic-gradient(from 45deg, var(--orange), var(--gold-deep), var(--green-bright), var(--navy), var(--red), var(--orange));
+    align-items: center; justify-content: center; text-align: center;
+  }
+  #s11 .big {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 9vw;
+    color: var(--paper);
+    line-height: 0.9;
+    transform: rotate(-3deg);
+    text-shadow: 8px 8px 0 var(--ink);
+    background: var(--navy);
+    padding: 2vh 3vw;
+  }
+  #s11 .sub {
+    font-family: 'Permanent Marker', cursive;
+    font-size: 4vw;
+    color: var(--paper);
+    margin-top: 4vh;
+    transform: rotate(1.5deg);
+    background: var(--red);
+    padding: 1vh 2vw;
+  }
+  #s11 .sticker {
+    position: absolute;
+    background: var(--paper);
+    color: var(--red);
+    font-family: 'Permanent Marker', cursive;
+    padding: 8px 16px;
+    transform: rotate(-12deg);
+    box-shadow: 4px 4px 0 var(--ink);
+    font-size: 2vw;
+  }
+  #s11 .s1 { top: 10%; left: 8%; }
+  #s11 .s2 { bottom: 12%; right: 10%; transform: rotate(15deg); background: var(--gold); }
+
+  /* Common style for fun award slides 12-17 */
+  .fun {
+    flex-direction: column;
+  }
+  .fun .label {
+    font-family: 'Bungee', sans-serif;
+    font-size: 4.5vw;
+    line-height: 0.95;
+  }
+  .fun .winner {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 10vw;
+    line-height: 0.9;
+  }
+  .fun .stat {
+    font-family: 'Permanent Marker', cursive;
+    font-size: 4vw;
+    margin-top: 2vh;
+    line-height: 1.1;
+  }
+  .fun .caption {
+    font-family: 'Caveat', cursive; font-weight: 700;
+    font-size: 2.6vw;
+    margin-top: 3vh;
+    line-height: 1.2;
+  }
+
+  /* SLIDE 12 : Hot Streak (Leah) */
+  #s12 {
+    background: linear-gradient(170deg, var(--gold-deep) 0%, var(--red) 100%);
+    color: var(--paper);
+  }
+  #s12 .label { color: var(--paper); transform: rotate(-2deg); text-shadow: 5px 5px 0 var(--navy); }
+  #s12 .winner { color: var(--gold); transform: rotate(1deg); text-shadow: 6px 6px 0 var(--navy); }
+  #s12 .calendar {
+    display: flex; gap: 0.6vw; margin-top: 3vh; flex-wrap: wrap;
+  }
+  #s12 .day {
+    width: 6vw; height: 6vw;
+    background: var(--paper);
+    color: var(--red);
+    font-family: 'Bungee', sans-serif;
+    font-size: 3vw;
+    display: flex; align-items: center; justify-content: center;
+    transform: rotate(calc(var(--rot, 0) * 1deg));
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+  #s12 .day.fire {
+    background: var(--gold);
+  }
+  #s12 .caption { color: var(--paper); transform: rotate(-1deg); }
+
+  /* SLIDE 13 : Comeback (Lucas) */
+  #s13 {
+    background: linear-gradient(90deg, #2a4a6b 0%, #2a4a6b 50%, var(--orange) 50%, var(--orange) 100%);
+    color: var(--paper);
+    flex-direction: column;
+    align-items: center; justify-content: center;
+  }
+  #s13 .label {
+    font-family: 'Bungee', sans-serif;
+    font-size: 5vw;
+    color: var(--paper);
+    background: var(--navy);
+    padding: 1vh 2vw;
+    transform: rotate(-2deg);
+  }
+  #s13 .winner {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 11vw;
+    color: var(--gold);
+    line-height: 0.9;
+    text-shadow: 6px 6px 0 var(--navy);
+    transform: rotate(1deg);
+    margin: 2vh 0;
+  }
+  #s13 .timeline {
+    display: flex; align-items: center; gap: 2vw;
+    width: 100%;
+    justify-content: space-between;
+    padding: 0 5vw;
+  }
+  #s13 .date-pill {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Permanent Marker', cursive;
+    padding: 1vh 1.5vw;
+    font-size: 2vw;
+    box-shadow: 5px 5px 0 var(--ink);
+  }
+  #s13 .date-pill.left { transform: rotate(-3deg); }
+  #s13 .date-pill.right { transform: rotate(3deg); }
+  #s13 .gap {
+    font-family: 'Bungee', sans-serif;
+    font-size: 6vw;
+    color: var(--paper);
+    background: var(--gold);
+    color: var(--ink);
+    padding: 1vh 2vw;
+    transform: rotate(-2deg);
+    text-shadow: 4px 4px 0 var(--paper);
+    flex-shrink: 0;
+  }
+  #s13 .caption {
+    font-family: 'Caveat', cursive; font-weight: 700;
+    font-size: 2.6vw;
+    color: var(--paper);
+    text-align: center;
+    margin-top: 3vh;
+    transform: rotate(-1deg);
+  }
+
+  /* SLIDE 14 : Late Bloomer (Katie C) */
+  #s14 {
+    background:
+      radial-gradient(circle at 80% 20%, rgba(255,243,176,0.5), transparent 40%),
+      var(--sage);
+    color: var(--paper);
+  }
+  #s14 .label { color: var(--gold); transform: rotate(-2deg); text-shadow: 4px 4px 0 var(--navy); }
+  #s14 .winner { color: var(--paper); transform: rotate(1deg); text-shadow: 6px 6px 0 var(--navy); }
+  #s14 .stat { color: var(--gold); transform: rotate(-1deg); }
+  #s14 .caption { color: var(--paper); transform: rotate(0.5deg); }
+  #s14 .zzz {
+    position: absolute; top: 12%; left: 8%;
+    font-family: 'Caveat', cursive; font-weight: 700;
+    color: var(--paper);
+    font-size: 4vw;
+    transform: rotate(-15deg);
+    opacity: 0.7;
+  }
+  #s14 .sun {
+    position: absolute; bottom: 10%; right: 8%;
+    font-family: 'Bungee', sans-serif;
+    color: var(--gold);
+    font-size: 3vw;
+    background: var(--gold-deep);
+    padding: 1vh 2vw;
+    transform: rotate(15deg);
+    color: var(--ink);
+    box-shadow: 4px 4px 0 var(--paper);
+  }
+
+  /* SLIDE 15 : Sniper (Dylan) */
+  #s15 {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+    color: var(--paper);
+  }
+  #s15 .label { color: var(--red); transform: rotate(-2deg); }
+  #s15 .winner { color: var(--paper); transform: rotate(1deg); text-shadow: 4px 4px 0 var(--red); }
+  #s15 .stat {
+    color: var(--gold);
+    background: var(--ink);
+    padding: 1vh 2vw;
+    display: inline-block;
+    border: 4px solid var(--red);
+    transform: rotate(-1deg);
+  }
+  #s15 .vs {
+    font-family: 'Patrick Hand', sans-serif;
+    font-size: 2.2vw;
+    margin-top: 2vh;
+    color: #ccc;
+    transform: rotate(0.5deg);
+  }
+  #s15 .vs b { color: var(--gold); font-family: 'Permanent Marker', cursive; font-weight: 400; }
+  #s15 .caption { color: var(--paper); transform: rotate(-0.5deg); }
+  #s15 .crosshair {
+    position: absolute; top: 8%; right: 8%;
+    width: 12vw; height: 12vw;
+    border: 4px solid var(--red);
+    border-radius: 50%;
+    transform: rotate(20deg);
+  }
+  #s15 .crosshair::before, #s15 .crosshair::after {
+    content: ''; position: absolute;
+    background: var(--red);
+  }
+  #s15 .crosshair::before { left: 50%; top: -10%; bottom: -10%; width: 2px; transform: translateX(-50%); }
+  #s15 .crosshair::after { top: 50%; left: -10%; right: -10%; height: 2px; transform: translateY(-50%); }
+
+  /* SLIDE 16 : Dynamic Duo */
+  #s16 {
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-deep) 100%);
+    color: var(--ink);
+  }
+  #s16 .label { color: var(--red); transform: rotate(-2deg); }
+  #s16 .winner {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 7vw;
+    color: var(--navy);
+    line-height: 1;
+    transform: rotate(1deg);
+    text-shadow: 4px 4px 0 var(--paper);
+  }
+  #s16 .amp {
+    font-family: 'Bungee', sans-serif;
+    color: var(--red);
+    font-size: 9vw;
+    display: inline-block;
+    margin: 0 1vw;
+    transform: rotate(-10deg);
+    vertical-align: middle;
+  }
+  #s16 .stat { color: var(--red); transform: rotate(-1deg); }
+  #s16 .caption { color: var(--navy); transform: rotate(0.5deg); }
+  #s16 .heart {
+    position: absolute; top: 10%; right: 12%;
+    font-family: 'Permanent Marker', cursive;
+    color: var(--red);
+    font-size: 8vw;
+    transform: rotate(15deg);
+  }
+
+  /* SLIDE 17 : Most Improved (Abby) */
+  #s17 {
+    background:
+      linear-gradient(180deg, transparent 60%, rgba(46,139,87,0.15) 100%),
+      var(--paper);
+    color: var(--ink);
+  }
+  #s17 .label { color: var(--green); transform: rotate(-2deg); }
+  #s17 .winner { color: var(--red); transform: rotate(1deg); text-shadow: 6px 6px 0 var(--gold); }
+  #s17 .chart {
+    display: flex; align-items: flex-end; gap: 1vw;
+    margin-top: 3vh;
+    height: 25vh;
+  }
+  #s17 .bar {
+    width: 6vw;
+    background: var(--green);
+    display: flex; flex-direction: column; align-items: center;
+    color: var(--paper);
+    font-family: 'Bungee', sans-serif;
+    font-size: 1.6vw;
+    padding-top: 0.5vh;
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+  #s17 .bar.big { background: var(--red); height: 100%; }
+  #s17 .bar.med { background: var(--orange); height: 70%; }
+  #s17 .bar.small { background: var(--sage); height: 10%; }
+  #s17 .bar .month { margin-top: auto; padding: 0.4vh; font-size: 1.3vw; background: var(--ink); width: 100%; text-align: center; font-family: 'Patrick Hand', sans-serif; }
+  #s17 .stat { color: var(--green); transform: rotate(-1deg); }
+  #s17 .caption { color: var(--ink); transform: rotate(0.5deg); }
+  #s17 .arrow {
+    position: absolute; top: 18%; right: 12%;
+    font-family: 'Bungee', sans-serif;
+    color: var(--green);
+    font-size: 8vw;
+    transform: rotate(-30deg);
+  }
+
+  /* SLIDE 18 : Honorable Mentions */
+  #s18 {
+    background: var(--paper);
+    flex-direction: column;
+  }
+  #s18 .header {
+    font-family: 'Bungee', sans-serif;
+    font-size: 4.5vw;
+    color: var(--navy);
+    transform: rotate(-1deg);
+  }
+  #s18 .sub {
+    font-family: 'Caveat', cursive; font-weight: 700;
+    font-size: 2.4vw;
+    color: var(--orange);
+    margin-bottom: 1vh;
+  }
+  #s18 .wall {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.2vh 2vw;
+    align-content: start;
+    margin-top: 1vh;
+  }
+  #s18 .row {
+    font-size: 1.85vw;
+    line-height: 1.3;
+    padding: 0.4vh 0.8vw;
+  }
+  #s18 .row b { font-weight: 700; }
+  #s18 .row:nth-child(6n+1) { font-family: 'Permanent Marker', cursive; color: var(--red); transform: rotate(-0.5deg); }
+  #s18 .row:nth-child(6n+2) { font-family: 'Caveat', cursive; font-weight: 700; color: var(--orange); transform: rotate(0.5deg); font-size: 2.3vw; }
+  #s18 .row:nth-child(6n+3) { font-family: 'Patrick Hand', sans-serif; color: var(--green); transform: rotate(-0.5deg); font-size: 2.05vw; }
+  #s18 .row:nth-child(6n+4) { font-family: 'Bebas Neue', sans-serif; color: var(--navy); letter-spacing: 0.5px; transform: rotate(0.5deg); font-size: 2.2vw; }
+  #s18 .row:nth-child(6n+5) { font-family: 'Permanent Marker', cursive; color: var(--bronze); transform: rotate(-0.5deg); }
+  #s18 .row:nth-child(6n+6) { font-family: 'Caveat', cursive; font-weight: 700; color: var(--red); transform: rotate(0.5deg); font-size: 2.3vw; }
+
+  /* SLIDE 19 : Memory Station */
+  #s19 {
+    background: var(--sage);
+    align-items: center; justify-content: center; text-align: center;
+    flex-direction: column;
+  }
+  #s19 .arrow {
+    font-family: 'Bungee', sans-serif;
+    font-size: 12vw;
+    color: var(--paper);
+    transform: rotate(-15deg);
+    text-shadow: 6px 6px 0 var(--navy);
+  }
+  #s19 .title {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 7vw;
+    color: var(--paper);
+    line-height: 0.95;
+    text-shadow: 6px 6px 0 var(--navy);
+    transform: rotate(-2deg);
+    margin: 2vh 0;
+  }
+  #s19 .sub {
+    font-family: 'Permanent Marker', cursive;
+    font-size: 3vw;
+    color: var(--gold);
+    transform: rotate(1deg);
+    margin-bottom: 3vh;
+  }
+  #s19 .body {
+    font-family: 'Caveat', cursive; font-weight: 700;
+    font-size: 2.2vw;
+    color: var(--paper);
+    max-width: 70%;
+    line-height: 1.3;
+  }
+  #s19 .polaroid {
+    position: absolute;
+    background: var(--paper);
+    padding: 12px 12px 28px;
+    box-shadow: 6px 6px 0 var(--ink);
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    color: var(--ink);
+    font-size: 1.4vw;
+  }
+  #s19 .polaroid .ph {
+    width: 8vw; height: 8vw;
+    background: repeating-linear-gradient(45deg, #ddd, #ddd 8px, #ccc 8px, #ccc 16px);
+    margin-bottom: 6px;
+  }
+  #s19 .p1 { top: 8%; left: 8%; transform: rotate(-8deg); }
+  #s19 .p2 { bottom: 10%; right: 8%; transform: rotate(10deg); }
+
+  /* SLIDE 20 : Don't Die + Closing */
+  #s20 {
+    background:
+      radial-gradient(circle at 50% 50%, rgba(255,243,176,0.3), transparent 60%),
+      linear-gradient(135deg, var(--red) 0%, var(--orange) 100%);
+    color: var(--paper);
+    align-items: center; justify-content: center; text-align: center;
+  }
+  #s20 .title {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 14vw;
+    line-height: 0.85;
+    text-shadow: 10px 10px 0 var(--navy);
+    transform: rotate(-2deg);
+  }
+  #s20 .award-line {
+    font-family: 'Permanent Marker', cursive;
+    font-size: 3.5vw;
+    margin-top: 2vh;
+    transform: rotate(1deg);
+  }
+  #s20 .body {
+    font-family: 'Caveat', cursive; font-weight: 700;
+    font-size: 3vw;
+    margin-top: 4vh;
+    max-width: 80%;
+    line-height: 1.3;
+  }
+  #s20 .signoff {
+    margin-top: 4vh;
+    font-family: 'Patrick Hand', sans-serif;
+    font-size: 2.4vw;
+    line-height: 1.4;
+  }
+  #s20 .signoff .felix { color: var(--gold); font-family: 'Permanent Marker', cursive; }
+  #s20 .signoff .ashlyn { color: var(--paper); font-family: 'Permanent Marker', cursive; background: var(--navy); padding: 0 12px; }
+  #s20 .signoff small { display: block; font-size: 1.6vw; opacity: 0.85; margin-top: 1vh; }
+  #s20 .confetti {
+    position: absolute;
+    pointer-events: none;
+    font-family: 'Bungee', sans-serif;
+  }
+  #s20 .c1, #s20 .c2, #s20 .c3, #s20 .c4 { position: absolute; pointer-events: none; font-family: 'Bungee', sans-serif; }
+  #s20 .c1 { top: 10%; left: 8%; font-size: 4vw; color: var(--gold); transform: rotate(-15deg); }
+  #s20 .c2 { top: 14%; right: 12%; font-size: 5vw; color: var(--paper); transform: rotate(20deg); }
+  #s20 .c3 { bottom: 14%; left: 10%; font-size: 4vw; color: var(--navy); transform: rotate(15deg); }
+  #s20 .c4 { bottom: 8%; right: 8%; font-size: 5vw; color: var(--gold); transform: rotate(-20deg); }
+  #s20 .group-prompt {
+    position: absolute; bottom: 4%; left: 50%;
+    transform: translateX(-50%) rotate(-1deg);
+    background: var(--gold);
+    color: var(--ink);
+    font-family: 'Permanent Marker', cursive;
+    padding: 8px 20px;
+    font-size: 1.6vw;
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+
+  /* Print fallback */
+  @media print {
+    .slide { display: flex !important; page-break-after: always; }
+    .nav, .hint { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="deck">
+
+  <!-- 1: TITLE -->
+  <section class="slide active" id="s1">
+    <div class="doodle1">★</div>
+    <div class="doodle2">stomp stomp</div>
+    <div class="doodle3">!?!</div>
+    <div class="doodle4">~ ~ ~</div>
+    <div class="title">DON'T<br>DIE<br>WEEK</div>
+    <div class="sub">you survived sophomore year (somehow)</div>
+    <div class="date">May 1, 2026 // Class of 2028</div>
+  </section>
+
+  <!-- 2: Section divider, Contest Winners -->
+  <section class="slide" id="s2">
+    <div class="corner tl">round one ding ding</div>
+    <div class="big">AWARDS<br>ROUND 1</div>
+    <div class="sub">quarter zip design + vent cleaning</div>
+  </section>
+
+  <!-- 3: Quarter Zip Designers -->
+  <section class="slide" id="s3">
+    <div class="header">QUARTER ZIP DESIGNERS</div>
+    <div class="winners">
+      <div class="card">
+        <div class="placeholder">[design 1 photo here]</div>
+        <div class="name">Logan<br>Mansfield</div>
+      </div>
+      <div class="card">
+        <div class="placeholder">[design 2 photo here]</div>
+        <div class="name">Heidi R</div>
+      </div>
+      <div class="card">
+        <div class="placeholder">[design 3 photo here]</div>
+        <div class="name">Ellen Y</div>
+      </div>
+    </div>
+    <div class="footer">all three get a free <span class="hl-deep">Sunright boba</span></div>
+  </section>
+
+  <!-- 4: Vent Cleaning Champion -->
+  <section class="slide" id="s4">
+    <div class="boba-tag">(gets boba)</div>
+    <div class="title">VENT CLEANING CHAMPION</div>
+    <div class="winner">OCTAVIA</div>
+    <div class="sub">iconic behavior. truly.</div>
+    <div class="bubble">ok queen</div>
+  </section>
+
+  <!-- 5: Stompers Introduction -->
+  <section class="slide" id="s5">
+    <div class="corner-sticker">233 days, no breaks</div>
+    <div class="title">STOMPERS, the whole year<br>in ONE slide</div>
+    <div class="grid">
+      <div class="left">
+        <div class="stat-line">what we tracked: <b>top 3 finishers every single day</b></div>
+        <div class="stat-line"><b>Sept 1, 2025</b> to <b>April 23, 2026</b></div>
+        <div class="stat-line">two pools: <b>Regular</b> and <b>Cross Country</b><br>(because CC people walk numbers we cannot comprehend)</div>
+        <div class="stat-line">highest points wins. simple as.</div>
+      </div>
+      <div class="right">
+        <div class="big-num">233<small>days of data</small></div>
+        <div class="points-grid">
+          <div class="pt"><div class="place">1ST</div><div class="pts">3</div></div>
+          <div class="pt"><div class="place">2ND</div><div class="pts">2</div></div>
+          <div class="pt"><div class="place">3RD</div><div class="pts">1</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6: CC Gold (Arnav) -->
+  <section class="slide" id="s6">
+    <div class="medal">★ CC ★</div>
+    <div class="boba-tag">(gets boba)</div>
+    <div class="label">CROSS COUNTRY GOLD</div>
+    <div class="winner">ARNAV<br>SHETTY</div>
+    <div class="stats">
+      <div><b>96 points</b> (highest CC total)</div>
+      <div><b>38 total CC podiums</b> (about every 6 days)</div>
+      <div><b>Best single day:</b> 31,284 steps (Sept 12)</div>
+      <div>Even snuck onto the regular podium Sept 1, before going full CC mode</div>
+    </div>
+  </section>
+
+  <!-- 7: The Big One divider -->
+  <section class="slide" id="s7">
+    <div class="doodle tl">drum roll</div>
+    <div class="doodle br">like seriously</div>
+    <div class="big">THE BIG<br>ONE</div>
+    <div class="sub">regular pool, top 3 by points</div>
+    <div class="sub2">drumroll please</div>
+  </section>
+
+  <!-- 8: Bronze Felix -->
+  <section class="slide" id="s8">
+    <div class="boba-tag">gets boba</div>
+    <div class="label">THIRD PLACE, BRONZE</div>
+    <div class="winner">FELIX PENG</div>
+    <div class="stats">
+      <div><b>118 points</b></div>
+      <div>21 firsts, 15 seconds, 25 thirds</div>
+      <div><b>61 total podiums</b></div>
+      <div>Best day: 23,292 steps (Oct 9)</div>
+    </div>
+    <div class="joke">i did NOT rig this contest. ashlyn please confirm.</div>
+  </section>
+
+  <!-- 9: Silver Charlotte -->
+  <section class="slide" id="s9">
+    <div class="star1">★</div>
+    <div class="star2">✦</div>
+    <div class="boba-tag">gets boba</div>
+    <div class="label">SECOND PLACE, SILVER</div>
+    <div class="winner">CHARLOTTE<br>ALMOND</div>
+    <div class="stats">
+      <div><b>225 points</b></div>
+      <div>35 firsts, 44 seconds, 32 thirds</div>
+      <div><b>111 total podiums</b> (almost half the year)</div>
+      <div>Best day: 22,024 steps (Oct 12)</div>
+    </div>
+    <div class="quote">"most consistent walker in the class, hands down"</div>
+  </section>
+
+  <!-- 10: GOLD HENRY -->
+  <section class="slide" id="s10">
+    <div class="boba-tag">(yes, also gets boba)</div>
+    <div class="c1">★ ★ ★</div>
+    <div class="c2">CHAMP</div>
+    <div class="c3">no notes</div>
+    <div class="c4">!!!</div>
+    <div class="label">STOMPERS CHAMPION 2025 to 2026</div>
+    <div class="winner">HENRY<br>ALLEN</div>
+    <div class="mega-stat">
+      <div class="num">59,784</div>
+      <div class="lbl">STEPS<br>IN ONE DAY<small>January 6, 2026</small></div>
+    </div>
+    <div class="extra">
+      <div><b>328 POINTS</b> (100+ ahead of 2nd place)</div>
+      <div><b>140 podiums.</b> 75 firsts. 38 seconds. 27 thirds.</div>
+      <div>Podiumed every single month: 6, 18, 22, 18, 22, 20, 18, 16</div>
+      <div>That January 6 walk was roughly <b>30 miles</b>. one day. hello.</div>
+    </div>
+  </section>
+
+  <!-- 11: Fun awards divider -->
+  <section class="slide" id="s11">
+    <div class="sticker s1">no boba sorry</div>
+    <div class="sticker s2">just glory</div>
+    <div class="big">FUN<br>AWARDS</div>
+  </section>
+
+  <!-- 12: Hot Streak Leah -->
+  <section class="slide fun" id="s12">
+    <div class="label">HOT STREAK AWARD</div>
+    <div class="winner">LEAH URIARTE</div>
+    <div class="stat">9 consecutive days on the podium</div>
+    <div class="calendar">
+      <div class="day fire" style="--rot:-3">1</div>
+      <div class="day fire" style="--rot:2">2</div>
+      <div class="day fire" style="--rot:-2">3</div>
+      <div class="day fire" style="--rot:3">4</div>
+      <div class="day fire" style="--rot:-3">5</div>
+      <div class="day fire" style="--rot:2">6</div>
+      <div class="day fire" style="--rot:-1">7</div>
+      <div class="day fire" style="--rot:3">8</div>
+      <div class="day fire" style="--rot:-2">9</div>
+    </div>
+    <div class="caption">she just kept showing up. day after day after day.</div>
+  </section>
+
+  <!-- 13: Comeback Lucas -->
+  <section class="slide" id="s13">
+    <div class="label">COMEBACK AWARD</div>
+    <div class="winner">LUCAS GIRALDO</div>
+    <div class="timeline">
+      <div class="date-pill left">Sept 23, 2025<br><small>last podium</small></div>
+      <div class="gap">172 DAYS</div>
+      <div class="date-pill right">Mar 14, 2026<br><small>he's back</small></div>
+    </div>
+    <div class="caption">disappeared in september. resurfaced in march. like nothing happened.</div>
+  </section>
+
+  <!-- 14: Late Bloomer Katie C -->
+  <section class="slide fun" id="s14">
+    <div class="zzz">zzz... zzz...</div>
+    <div class="sun">RISE AND GRIND</div>
+    <div class="label">LATE BLOOMER AWARD</div>
+    <div class="winner">KATIE C</div>
+    <div class="stat">first podium: March 1, 2026</div>
+    <div class="caption">slept on Stompers all year. then woke up swinging. (3 podiums in March + April)</div>
+  </section>
+
+  <!-- 15: Sniper Dylan -->
+  <section class="slide fun" id="s15">
+    <div class="crosshair"></div>
+    <div class="label">THE SNIPER AWARD</div>
+    <div class="winner">DYLAN RAINMAN</div>
+    <div class="stat">won by 91 STEPS</div>
+    <div class="vs">11,232 vs <b>11,141</b> for Charlotte Almond, March 31, 2026</div>
+    <div class="caption">closest 1st-place margin all year. 91 steps. that is one minute of walking.</div>
+  </section>
+
+  <!-- 16: Most Improved Abby -->
+  <section class="slide fun" id="s17">
+    <div class="arrow">↗</div>
+    <div class="label">MOST IMPROVED</div>
+    <div class="winner">ABBY SANDORFF</div>
+    <div class="chart">
+      <div class="bar small"><span>0</span><div class="month">DEC</div></div>
+      <div class="bar big"><span>10</span><div class="month">JAN</div></div>
+    </div>
+    <div class="stat">WINTER BREAK DID HER WELL</div>
+    <div class="caption">0 in december to 10 in january. somebody got rested.</div>
+  </section>
+
+  <!-- 18: Honorable Mentions -->
+  <section class="slide" id="s18">
+    <div class="header">HONORABLE MENTIONS</div>
+    <div class="sub">we see you, we appreciate you, we just ran out of awards</div>
+    <div class="wall">
+      <div class="row"><b>Silas Brock</b>, 4th overall (109 pts, 53 podiums), the most consistent person we did NOT give an award to</div>
+      <div class="row"><b>Leah Uriarte</b>, 5th (104 pts, 51 podiums), would have run away with December if she hadn't peaced out in February</div>
+      <div class="row"><b>Andy Maldonado</b>, 6th (88 pts, 43 podiums), peaked in November with 17 podiums then ghosted</div>
+      <div class="row"><b>Dylan Rainman</b>, 7th (85 pts, 48 podiums), low-key consistent every single month</div>
+      <div class="row"><b>Natalie Ko</b>, 12 podiums in September alone (then 5 months of nothing)</div>
+      <div class="row"><b>Angie Hou</b>, 13 podiums in September alone, also September-only energy</div>
+      <div class="row"><b>Logan Mansfield</b>, won the hoodie contest AND posted 10 podiums on the side</div>
+      <div class="row"><b>Carolyn Davis</b>, 6 podiums in December out of 8 total. December warrior.</div>
+      <div class="row"><b>Alana Jonick</b>, scattered 10 podiums across 4 different months. Range.</div>
+      <div class="row"><b>Penelope Rodriguez</b>, came back in March after a 5-month gap, just like Lucas</div>
+      <div class="row"><b>Jack Van der Reis</b>, 10 podiums spread surgically across the whole year</div>
+      <div class="row"><b>Samara Baidwan</b>, 2 first-place finishes, no time wasted</div>
+    </div>
+  </section>
+
+  <!-- 19: Memory Station -->
+  <section class="slide" id="s19">
+    <div class="polaroid p1"><div class="ph"></div>sophomore<br>survival</div>
+    <div class="polaroid p2"><div class="ph"></div>we made it<br>somehow</div>
+    <div class="arrow">→ → →</div>
+    <div class="title">GO TO<br>THE CORNER</div>
+    <div class="sub">photo strip station + memory wall</div>
+    <div class="body">leave something behind. write your sophomore year in one word. take a survival photo. post it. don't post it. up to you.</div>
+  </section>
+
+  <!-- 20: Don't Die + Closing -->
+  <section class="slide" id="s20">
+    <div class="confetti c1">★</div>
+    <div class="confetti c2">!!!</div>
+    <div class="confetti c3">YIPPEE</div>
+    <div class="confetti c4">★</div>
+    <div class="title">DON'T DIE<br>AWARD</div>
+    <div class="award-line">goes to: <span class="hl" style="color:#222">EVERY SINGLE PERSON</span> in this room</div>
+    <div class="body">you survived sophomore year. you are alive. we are proud of you. thanks class of 2028, see you next year.</div>
+    <div class="signoff">
+      <span class="felix">Felix Peng</span> &nbsp; + &nbsp; <span class="ashlyn">Ashlyn Green</span>
+      <small>Class of 2028 Co-Presidents</small>
+    </div>
+    <div class="group-prompt">GROUP PHOTO. NOW. EVERYONE IN.</div>
+  </section>
+
+</div>
+
+<div class="hint">← prev &nbsp; → / space next &nbsp; F = fullscreen</div>
+<div class="nav">
+  <button onclick="prev()">◀</button>
+  <span id="counter">1 / 20</span>
+  <button onclick="next()">▶</button>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const total = slides.length;
+  let idx = 0;
+  const counter = document.getElementById('counter');
+
+  function show(n) {
+    idx = Math.max(0, Math.min(total - 1, n));
+    slides.forEach((s, i) => s.classList.toggle('active', i === idx));
+    counter.textContent = (idx + 1) + ' / ' + total;
+  }
+  function next() { show(idx + 1); }
+  function prev() { show(idx - 1); }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); next(); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); prev(); }
+    else if (e.key.toLowerCase() === 'f') {
+      if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+      else document.exitFullscreen();
+    }
+    else if (e.key === 'Home') { show(0); }
+    else if (e.key === 'End') { show(total - 1); }
+  });
+
+  // click to advance, except on nav controls
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('.nav') || e.target.closest('.hint')) return;
+    next();
+  });
+
+  // Direct-slide URL param for export tools, e.g. ?slide=5&export=1
+  const params = new URLSearchParams(window.location.search);
+  const startSlide = parseInt(params.get('slide'));
+  if (!isNaN(startSlide) && startSlide >= 1 && startSlide <= total) {
+    show(startSlide - 1);
+  }
+  if (params.get('export') === '1') {
+    document.querySelector('.nav').style.display = 'none';
+    document.querySelector('.hint').style.display = 'none';
+  }
+</script>
+</body>
+</html>
